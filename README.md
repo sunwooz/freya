@@ -22,7 +22,7 @@ Create a yml file containing the bodies of your emails.
 
 ```yml
 test:
-    email1: This is a test email
+    email: This is a test email
 ```
 
 Then you create a link to this email like this:
