@@ -25,10 +25,15 @@ module Pigeon
 
   class Email < OpenStruct
     def link
-      link = [to + '?' + subject.to_query('subject').gsub('+', '%20')]
-      link << cc.to_query('cc').gsub('+', '%20') if cc
-      link << body.to_query('body').gsub('+', '%20')
-      link.join("&")
+      link = to + '?'
+
+      link_params = ['subject', 'cc', 'body'].inject([]) do |link_params, param_name|
+        param = send(param_name)
+        link_params << param.to_query(param_name).gsub('+', '%20') if param
+        link_params
+      end
+
+      link + link_params.join("&")
     end
 
     def body
