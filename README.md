@@ -1,6 +1,6 @@
 # Pigeon
 
-TODO: Write a gem description
+A minimal email link generator
 
 ## Installation
 
@@ -18,7 +18,20 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Create a yml file containing the bodies of your emails.
+
+```yml
+test:
+    email1: This is a test email
+```
+
+Then you create a link to this email like this:
+
+```ruby
+mail_to Pigeon::Email.new(name:'test email', to: 'test@test.com', subject: 'test_subject).link, 'Email' 
+```
+
+You can access mail bodies using the `name` attribute separating nodes with white spaces.
 
 ## Contributing
 
