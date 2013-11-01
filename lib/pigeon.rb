@@ -5,12 +5,21 @@ require 'rails'
 
 module Pigeon
   class Template
+    def self.config=(config)
+      @config ||= config
+    end
+
+    def self.config
+      @config
+    end
+
     def initialize
-      @@config ||= HashWithIndifferentAccess.new(YAML.load(IO.read(File.join(Rails.root, 'config', 'emails.yml'))))
+      return unless File.exists?(File.join(Rails.root, 'config', 'emails.yml'))
+      self.class.config ||= HashWithIndifferentAccess.new(YAML.load(IO.read(File.join(Rails.root, 'config', 'emails.yml'))))
     end
 
     def [](name)
-      name.to_s.split(' ').inject(@@config) { |result, n| result[n] }
+      name.to_s.split(' ').inject(self.class.config) { |result, n| result[n] }
     end
   end
 

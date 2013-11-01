@@ -3,6 +3,7 @@ require 'pry'
 
 describe Pigeon::Email do
   before do
+    File.stub(exists?: true)
     Rails.stub(root: 'pigeon')
     Pigeon.send(:remove_const, 'Template')
     load 'lib/pigeon.rb'
