@@ -19,7 +19,7 @@ module Pigeon
     end
 
     def [](name)
-      name.to_s.split(' ').inject(self.class.config) { |result, n| result[n] }
+      name.to_s.split(' ').inject(self.class.config) { |result, n| result.fetch(n) }
     end
   end
 

@@ -41,6 +41,12 @@ describe Pigeon::Email do
 
         Pigeon::Email.new(name: 'test email').body.should eq('This is the test email')
       end
+
+      it 'raises exception if the key is not found' do
+        expect {
+          Pigeon::Email.new(name: 'wrong_name').body
+        }.to raise_error
+      end
     end
   end
 
