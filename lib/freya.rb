@@ -2,6 +2,7 @@ require 'freya/version'
 require 'active_support/core_ext/hash'
 require 'yaml'
 require 'rails'
+require 'uri/mailto'
 
 module Freya
   class Template
@@ -25,15 +26,9 @@ module Freya
 
   class Email < OpenStruct
     def link
-      link = to + '?'
-
-      link_params = ['subject', 'cc', 'body'].inject([]) do |link_params, param_name|
-        param = send(param_name)
-        link_params << param.to_query(param_name).gsub('+', '%20') if param
-        link_params
-      end
-
-      link + link_params.join("&")
+      URI::MailTo.build({ to: to, headers: [
+        ['subject', URI.escape(subject)], ['body', URI.escape(body)], *cc.map { |email| ['cc', email] }
+      ] }).to_s
     end
 
     def body
