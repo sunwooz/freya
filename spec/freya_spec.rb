@@ -21,7 +21,7 @@ describe Freya::Email do
     describe '#link' do
       it 'builds a mail link with options like to, cc and the email body' do
         Freya::Email.new(name: 'test_email', subject: 'subject', to: 'test@test.com', cc: ['test1@test.com', 'test2@test.com']).link.should eq(
-          'test@test.com?subject=subject&body=This%20is%20the%20test%20email&cc=test1@test.com&cc=test2@test.com'
+          'test@test.com?cc=test1%40test.com&cc=test2%40test.com&body=This%20is%20the%20test%20email&subject=subject'
         )
       end
     end
