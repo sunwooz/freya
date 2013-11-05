@@ -28,7 +28,7 @@ module Freya
     def link
       URI::MailTo.build({ to: to, headers: [
         ['subject', URI.escape(subject)], ['body', URI.escape(body)], *cc.map { |email| ['cc', email] }
-      ] }).to_s
+      ] }).opaque
     end
 
     def body
