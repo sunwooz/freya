@@ -1,12 +1,12 @@
-require 'pigeon'
+require 'freya'
 require 'pry'
 
-describe Pigeon::Email do
+describe Freya::Email do
   before do
     File.stub(exists?: true)
-    Rails.stub(root: 'pigeon')
-    Pigeon.send(:remove_const, 'Template')
-    load 'lib/pigeon.rb'
+    Rails.stub(root: 'freya')
+    Freya.send(:remove_const, 'Template')
+    load 'lib/freya.rb'
   end
 
   describe 'methods' do
@@ -20,7 +20,7 @@ describe Pigeon::Email do
 
     describe '#link' do
       it 'builds a mail link with options like to, cc and the email body' do
-        Pigeon::Email.new(name: 'test_email', subject: 'subject', to: 'test@test.com', cc: ['test2@test.com']).link.should eq(
+        Freya::Email.new(name: 'test_email', subject: 'subject', to: 'test@test.com', cc: ['test2@test.com']).link.should eq(
           'test@test.com?subject=subject&cc%5B%5D=test2%40test.com&body=This%20is%20the%20test%20email'
         )
       end
@@ -28,7 +28,7 @@ describe Pigeon::Email do
 
     describe '#body' do
       it 'returns a email body based on the name' do
-        Pigeon::Email.new(name: 'test_email').body.should eq('This is the test email')
+        Freya::Email.new(name: 'test_email').body.should eq('This is the test email')
       end
 
       it 'returns a email body based on names separated by space' do
@@ -39,18 +39,18 @@ describe Pigeon::Email do
           EOS
         )
 
-        Pigeon::Email.new(name: 'test email').body.should eq('This is the test email')
+        Freya::Email.new(name: 'test email').body.should eq('This is the test email')
       end
 
       it 'raises exception if the key is not found' do
         expect {
-          Pigeon::Email.new(name: 'wrong_name').body
+          Freya::Email.new(name: 'wrong_name').body
         }.to raise_error
       end
     end
   end
 
-  describe Pigeon::Template do
+  describe Freya::Template do
     before do
       IO.stub(read:
         <<-EOS
@@ -61,13 +61,13 @@ describe Pigeon::Email do
     end
 
     it 'responds to emails defined in emails.yml' do
-      Pigeon::Template.new[:test_email].should be_present
-      Pigeon::Template.new[:test_email2].should be_present
+      Freya::Template.new[:test_email].should be_present
+      Freya::Template.new[:test_email2].should be_present
     end
 
     it 'its methods return an email containing the body of the corresponding emails' do
-      Pigeon::Template.new[:test_email].should eq('This is the first test email')
-      Pigeon::Template.new[:test_email2].should eq('This is the second test email')
+      Freya::Template.new[:test_email].should eq('This is the first test email')
+      Freya::Template.new[:test_email2].should eq('This is the second test email')
     end
 
     it 'allows access to nested email templates' do
@@ -80,8 +80,8 @@ describe Pigeon::Email do
         EOS
       )
 
-      Pigeon::Template.new[:test1][:email].should eq('This is the first test email')
-      Pigeon::Template.new[:test2][:email].should eq('This is the second test email')
+      Freya::Template.new[:test1][:email].should eq('This is the first test email')
+      Freya::Template.new[:test2][:email].should eq('This is the second test email')
     end
   end
 end

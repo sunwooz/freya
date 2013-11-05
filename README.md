@@ -1,4 +1,4 @@
-# Pigeon
+# Freya
 
 A minimal email link generator
 
@@ -6,7 +6,7 @@ A minimal email link generator
 
 Add this line to your application's Gemfile:
 
-    gem 'pigeon'
+    gem 'freya'
 
 And then execute:
 
@@ -14,7 +14,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install pigeon
+    $ gem install freya
 
 ## Usage
 
@@ -28,7 +28,7 @@ test:
 Then you create a link to this email like this:
 
 ```ruby
-mail_to Pigeon::Email.new(name:'test email', to: 'test@test.com', subject: 'test_subject).link, 'Email' 
+mail_to Freya::Email.new(name:'test email', to: 'test@test.com', subject: 'test_subject).link, 'Email'
 ```
 
 You can access mail bodies using the `name` attribute separating nodes with white spaces.

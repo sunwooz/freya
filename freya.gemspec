@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'pigeon/version'
+require 'freya/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "pigeon"
-  spec.version       = Pigeon::VERSION
+  spec.name          = "freya"
+  spec.version       = Freya::VERSION
   spec.authors       = ["Matteo Depalo"]
   spec.email         = ["matteodepalo@gmail.com"]
   spec.description   = %q{Minimal email generator}

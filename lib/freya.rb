@@ -1,9 +1,9 @@
-require 'pigeon/version'
+require 'freya/version'
 require 'active_support/core_ext/hash'
 require 'yaml'
 require 'rails'
 
-module Pigeon
+module Freya
   class Template
     def self.config=(config)
       @config ||= config
