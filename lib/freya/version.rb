@@ -1,3 +1,3 @@
 module Freya
-  VERSION = "0.0.5"
+  VERSION = "0.1.0"
 end
