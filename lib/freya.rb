@@ -19,7 +19,7 @@ module Freya
     end
 
     def [](name)
-      name.to_s.split(' ').inject(self.class.config) { |result, n| result.fetch(n) }
+      name.present? ? name.to_s.split(' ').inject(self.class.config) { |result, n| result.fetch(n) } : nil
     end
   end
 
