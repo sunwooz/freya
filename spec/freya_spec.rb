@@ -48,6 +48,18 @@ describe Freya::Email do
         }.to raise_error
       end
     end
+
+    describe '#cc' do
+      it "doesn't contain #to email" do
+        Freya::Email.new(name: 'test_email', to: 'test@test.com', cc: ['test@test.com', 'test2@test.com']).cc.should eq(['test2@test.com'])
+      end
+    end
+
+    describe '#bcc' do
+      it "doesn't contain #to email" do
+        Freya::Email.new(name: 'test_email', to: 'test@test.com', cc: ['test@test.com', 'test1@test.com']).cc.should eq(['test1@test.com'])
+      end
+    end
   end
 
   describe Freya::Template do

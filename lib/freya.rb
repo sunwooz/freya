@@ -23,12 +23,23 @@ module Freya
     end
   end
 
-  class Email < OpenStruct
+  class Email
+    attr_accessor :name, :to, :subject, :cc, :bcc
+
+    def initialize(name: nil, to: nil, subject: nil, cc: [], bcc: [])
+      @name = name
+      @to = to
+      @subject = subject
+      @cc = cc
+      @bcc = bcc
+    end
+
     def link
       extras = %w{ cc bcc body subject }.select { |extra| send(extra).present? }.map { |extra| [extra, send(extra)] }.map { |extra|
         name = extra[0]
         value = extra[1]
 
+        #cc and  #bcc must be repeated for every email in the array
         [value].flatten.map do |component|
           "#{name}=#{Rack::Utils.escape_path(component)}"
         end
@@ -41,6 +52,14 @@ module Freya
 
     def body
       Template.new[name]
+    end
+
+    def cc
+      @cc - [to]
+    end
+
+    def bcc
+      @bcc - [to]
     end
   end
 end
