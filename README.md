@@ -1,6 +1,6 @@
 # Freya
 
-A minimal email link generator
+Tool to build mailto links using static email bodies pulled from a YAML config file.
 
 ## Installation
 
