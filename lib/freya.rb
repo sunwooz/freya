@@ -45,11 +45,11 @@ module Freya
     end
 
     def cc
-      base_cc.to_a + self[:cc].to_a - [to]
+      (base_cc.to_a + self[:cc].to_a - [to]).uniq
     end
 
     def bcc
-      base_bcc.to_a + self[:bcc].to_a - [to]
+      (base_bcc.to_a + self[:bcc].to_a - [to]).uniq
     end
   end
 end
