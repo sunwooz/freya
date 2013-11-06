@@ -26,12 +26,12 @@ module Freya
   class Email
     attr_accessor :name, :to, :subject, :cc, :bcc
 
-    def initialize(name: nil, to: nil, subject: nil, cc: [], bcc: [])
-      @name = name
-      @to = to
-      @subject = subject
-      @cc = cc
-      @bcc = bcc
+    def initialize(options = {})
+      @name = options[:name]
+      @to = options[:to]
+      @subject = options[:subject]
+      @cc = options[:cc] || []
+      @bcc = options[:bcc] || []
     end
 
     def link
