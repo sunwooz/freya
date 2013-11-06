@@ -31,7 +31,7 @@ describe Freya::Email do
         Freya::Email.new(name: 'test_email').body.should eq('This is the test email')
       end
 
-      it 'returns a email body based on names separated by space' do
+      it 'returns a email body based on names separated by point' do
         IO.stub(read:
           <<-EOS
           test:
@@ -39,7 +39,7 @@ describe Freya::Email do
           EOS
         )
 
-        Freya::Email.new(name: 'test email').body.should eq('This is the test email')
+        Freya::Email.new(name: 'test.email').body.should eq('This is the test email')
       end
 
       it 'raises exception if the key is not found' do

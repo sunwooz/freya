@@ -19,13 +19,13 @@ module Freya
     end
 
     def [](name)
-      name.present? ? name.to_s.split(' ').inject(self.class.config) { |result, n| result.fetch(n) } : nil
+      name.present? ? name.to_s.split('.').inject(self.class.config) { |result, n| result.fetch(n) } : nil
     end
   end
 
   class Email < OpenStruct
     def link
-      extras = %w{ cc bcc body subject }.select { |extra| send(extra).present? }.map { |extra| [extra, send(extra)] }.map { |extra|
+      extras = %w{ cc bcc body subject }.select { |extra| send(extra).present? }.map { |extra| [extra, send(extra)] }.map do |extra|
         name = extra[0]
         value = extra[1]
 
@@ -33,7 +33,7 @@ module Freya
         [value].flatten.map do |component|
           "#{name}=#{Rack::Utils.escape_path(component)}"
         end
-      }.compact
+      end.compact
 
       extras = extras.empty? ? '' : '?' + extras.join('&')
 
