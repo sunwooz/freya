@@ -60,6 +60,20 @@ describe Freya::Email do
         Freya::Email.new(name: 'test_email', to: 'test@test.com', bcc: ['test@test.com', 'test1@test.com']).bcc.should eq(['test1@test.com'])
       end
     end
+
+    describe '#self.cc' do
+      it 'contains the base ccs' do
+        Freya::Email.stub(cc: ['base_email@test.com'])
+        Freya::Email.new(name: 'test_email', to: 'test@test.com', cc: ['test@test.com', 'test2@test.com']).cc.should eq(['base_email@test.com', 'test2@test.com'])
+      end
+    end
+
+    describe '#self.bcc' do
+      it 'contains the base bccs' do
+        Freya::Email.stub(bcc: ['base_email@test.com'])
+        Freya::Email.new(name: 'test_email', to: 'test@test.com', bcc: ['test@test.com', 'test1@test.com']).bcc.should eq(['base_email@test.com', 'test1@test.com'])
+      end
+    end
   end
 
   describe Freya::Template do

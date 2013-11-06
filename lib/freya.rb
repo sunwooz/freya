@@ -25,13 +25,14 @@ module Freya
 
   class Email
     attr_accessor :name, :to, :subject, :cc, :bcc
+    cattr_accessor :cc, :bcc
 
     def initialize(options = {})
       @name = options[:name]
       @to = options[:to]
       @subject = options[:subject]
-      @cc = options[:cc] || []
-      @bcc = options[:bcc] || []
+      @cc = options[:cc]
+      @bcc = options[:bcc]
     end
 
     def link
@@ -55,11 +56,11 @@ module Freya
     end
 
     def cc
-      @cc - [to]
+      self.class.cc.to_a + @cc.to_a - [to]
     end
 
     def bcc
-      @bcc - [to]
+      self.class.bcc.to_a + @bcc.to_a - [to]
     end
   end
 end
