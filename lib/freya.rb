@@ -23,18 +23,7 @@ module Freya
     end
   end
 
-  class Email
-    attr_accessor :name, :to, :subject, :cc, :bcc
-    cattr_accessor :cc, :bcc
-
-    def initialize(options = {})
-      @name = options[:name]
-      @to = options[:to]
-      @subject = options[:subject]
-      @cc = options[:cc]
-      @bcc = options[:bcc]
-    end
-
+  class Email < OpenStruct
     def link
       extras = %w{ cc bcc body subject }.select { |extra| send(extra).present? }.map { |extra| [extra, send(extra)] }.map { |extra|
         name = extra[0]
@@ -56,11 +45,11 @@ module Freya
     end
 
     def cc
-      self.class.cc.to_a + @cc.to_a - [to]
+      base_cc.to_a + self[:cc].to_a - [to]
     end
 
     def bcc
-      self.class.bcc.to_a + @bcc.to_a - [to]
+      base_bcc.to_a + self[:bcc].to_a - [to]
     end
   end
 end
