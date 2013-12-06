@@ -1,14 +1,6 @@
-require 'freya'
-require 'pry'
+require 'spec_helper'
 
 describe Freya::Email do
-  before do
-    File.stub(exists?: true)
-    Rails.stub(root: 'freya')
-    Freya.send(:remove_const, 'Template')
-    load 'lib/freya.rb'
-  end
-
   describe 'methods' do
     before do
       IO.stub(read:
@@ -32,6 +24,8 @@ describe Freya::Email do
       end
 
       it 'returns a email body based on names separated by point' do
+        reload_template
+
         IO.stub(read:
           <<-EOS
           test:
@@ -92,6 +86,8 @@ describe Freya::Email do
         test_email2: This is the second test email
         EOS
       )
+
+      reload_template
     end
 
     it 'responds to emails defined in emails.yml' do
@@ -114,8 +110,26 @@ describe Freya::Email do
         EOS
       )
 
+      reload_template
+
       Freya::Template.new[:test1][:email].should eq('This is the first test email')
       Freya::Template.new[:test2][:email].should eq('This is the second test email')
     end
+  end
+end
+
+describe Freya::Gmail do
+  before do
+    IO.stub(read:
+      <<-EOS
+      test_email: This is the test email
+      EOS
+    )
+  end
+
+  it 'builds the mail link for gmail if the type is set to gmail' do
+    Freya::Gmail.new(name: 'test_email', subject: 'subject', to: 'test@test.com').link.should eq(
+      'https://mail.google.com/mail?body=This%20is%20the%20test%20email&su=subject&to=test%40test.com&view=cm&fs=1'
+    )
   end
 end
