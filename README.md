@@ -52,6 +52,8 @@ class TeamMemberEmail < Freya::Email
 end
 ```
 
+If you want to create gmail links just use the `Freya::Gmail` class instead of the `Freya::Email` one.
+
 ## Contributing
 
 1. Fork it
