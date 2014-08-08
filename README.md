@@ -18,7 +18,7 @@ Or install it yourself as:
 
 ## Usage
 
-Create a yml file containing the bodies of your emails.
+Create an email.yml file containing the bodies of your emails.
 
 ```yml
 test:
